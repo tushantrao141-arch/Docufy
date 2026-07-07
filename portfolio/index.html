@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docufy — AI-powered documentation agent that scans your codebase and generates professional README files using advanced context engineering.">
+    <meta name="keywords" content="Docufy, AI documentation, README generator, context engineering, Python CLI, developer tools">
+    <meta name="author" content="tushantrao141-arch">
+    <title>Docufy — AI-Powered Documentation Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating particles canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">📄</span>
+                <span class="logo-text">Docufy</span>
+                <span class="logo-version">v0.2.2</span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#cli" class="nav-link">CLI</a>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#get-started" class="nav-link">Get Started</a>
+            </div>
+            <div class="nav-actions">
+                <a href="https://github.com/tushantrao141-arch/docufy" class="btn btn-ghost" target="_blank" rel="noopener">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://pypi.org/project/docufy/" class="btn btn-primary" target="_blank" rel="noopener">
+                    <span>Install</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-bg-image"></div>
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-up">
+                <span class="badge-dot"></span>
+                Open Source · PyPI v0.2.2
+            </div>
+            <h1 class="hero-title animate-fade-up delay-1">
+                AI-Powered<br>
+                <span class="gradient-text">Documentation</span><br>
+                Agent
+            </h1>
+            <p class="hero-subtitle animate-fade-up delay-2">
+                Docufy scans your codebase, builds structured context through a multi-stage 
+                agentic pipeline, and generates professional README files — all from the command line.
+            </p>
+            <div class="hero-actions animate-fade-up delay-3">
+                <a href="#get-started" class="btn btn-primary btn-lg">
+                    <span>Get Started</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#how-it-works" class="btn btn-outline btn-lg">
+                    <span>How It Works</span>
+                </a>
+            </div>
+            <div class="hero-terminal animate-fade-up delay-4">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <span class="terminal-title">Terminal</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-command" id="typed-command"></span>
+                        <span class="terminal-cursor">|</span>
+                    </div>
+                    <div class="terminal-output" id="terminal-output"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="100">0</span><span class="stat-suffix">%</span>
+                    <span class="stat-label">Open Source</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="2">0</span><span class="stat-suffix">-Stage</span>
+                    <span class="stat-label">Agentic Pipeline</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="4">0</span><span class="stat-suffix"></span>
+                    <span class="stat-label">CLI Commands</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="0">0</span><span class="stat-suffix"> Config</span>
+                    <span class="stat-label">Hassle to Get Started</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section features-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Everything You Need for<br><span class="gradient-text">Intelligent Documentation</span></h2>
+                <p class="section-subtitle">Docufy is not just another README generator. It is a context-engineered AI agent built on principles from the ACE framework.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🧠</div>
+                    </div>
+                    <h3>Context Engineering</h3>
+                    <p>Every stage of the pipeline is an input construction problem. Prompts are the primary engineering artefacts — not boilerplate wrappers.</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🗜️</div>
+                    </div>
+                    <h3>Intentional Compaction</h3>
+                    <p>Two-stage pipeline compresses raw source files into dense summaries. Raw code never touches the final context window — only distilled signal.</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🤖</div>
+                    </div>
+                    <h3>Subagent Isolation</h3>
+                    <p>Each file summary call is a bounded inference call. The parent pipeline only receives compacted output — keeping context clean and focused.</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">⚡</div>
+                    </div>
+                    <h3>Incremental Updates</h3>
+                    <p>Change one file? Only that slice of the cache is invalidated. No need to reprocess the entire codebase — just the stale context.</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">📦</div>
+                    </div>
+                    <h3>Smart Caching</h3>
+                    <p>File summaries persist in <code>.docufy/cache.json</code>. Subsequent runs resume from compact context — not raw files.</p>
+                </div>
+                <div class="feature-card" data-tilt>
+                    <div class="feature-icon-wrap">
+                        <div class="feature-icon">🔧</div>
+                    </div>
+                    <h3>Model Flexibility</h3>
+                    <p>Default to Groq's fast inference or override per-run with any supported model. Switch between LLMs without changing config.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section how-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Workflow</span>
+                <h2 class="section-title">Research → Plan → Implement<br><span class="gradient-text">Built Into the Pipeline</span></h2>
+                <p class="section-subtitle">Inspired by the ACE Framework from Dex Horthy, Docufy's agentic pipeline follows the three-phase workflow that makes AI agents actually work.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span>1</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-tag">Research Phase</div>
+                        <h3><code>docufy init</code></h3>
+                        <p>Scans your repository respecting <code>.gitignore</code> rules. Discovers all relevant files and compiles findings into <code>docufy.yaml</code> — the structured context manifest. No inference happens here; this is pure discovery.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span>2</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-tag">Stage 1 — Batch Summarization</div>
+                        <h3><code>docufy run</code> — Per-File Compression</h3>
+                        <p>Each file passes through a bounded summariser agent. A 500-line source file becomes 3–4 sentences of dense, structured signal. Summaries are cached to <code>.docufy/cache.json</code> — the compaction artefact.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span>3</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-tag">Stage 2 — Final Synthesis</div>
+                        <h3><code>docufy run</code> — README Generation</h3>
+                        <p>All summaries (never raw files) are assembled into the final context window. The agent synthesises a comprehensive, professional <code>README.md</code>. Previous README is safely backed up.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">
+                        <span>4</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-tag">Selective Refresh</div>
+                        <h3><code>docufy update &lt;path&gt;</code></h3>
+                        <p>When a file changes, only that slice of the compaction pipeline re-runs. Use <code>docufy update .</code> to regenerate README from existing cache without any new API calls.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLI Demo Section -->
+    <section id="cli" class="section cli-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">CLI Reference</span>
+                <h2 class="section-title">Four Commands.<br><span class="gradient-text">That's All You Need.</span></h2>
+            </div>
+            <div class="cli-grid">
+                <div class="cli-card active" data-cli="init">
+                    <div class="cli-card-header">
+                        <code>docufy init</code>
+                        <span class="cli-badge">Research</span>
+                    </div>
+                    <p>Scan the repository, build the context manifest, create <code>docufy.yaml</code>. Safe to re-run anytime.</p>
+                </div>
+                <div class="cli-card" data-cli="run">
+                    <div class="cli-card-header">
+                        <code>docufy run</code>
+                        <span class="cli-badge">Generate</span>
+                    </div>
+                    <p>Execute the full agentic pipeline. Summarise every file, then synthesise the final README.</p>
+                </div>
+                <div class="cli-card" data-cli="update">
+                    <div class="cli-card-header">
+                        <code>docufy update &lt;path&gt;</code>
+                        <span class="cli-badge">Refresh</span>
+                    </div>
+                    <p>Targeted cache refresh. Recompute one file or regenerate README from existing cache.</p>
+                </div>
+                <div class="cli-card" data-cli="models">
+                    <div class="cli-card-header">
+                        <code>docufy models</code>
+                        <span class="cli-badge">Discover</span>
+                    </div>
+                    <p>List all available Groq models with context window sizes. Pick the right model for your codebase.</p>
+                </div>
+            </div>
+            <div class="cli-preview">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                    </div>
+                    <span class="terminal-title" id="cli-terminal-title">docufy init</span>
+                </div>
+                <div class="terminal-body" id="cli-terminal-body">
+                    <div class="terminal-line"><span class="terminal-prompt">$</span> pip install docufy</div>
+                    <div class="terminal-line dimmed">Successfully installed docufy-0.2.2</div>
+                    <div class="terminal-line"><span class="terminal-prompt">$</span> docufy init</div>
+                    <div class="terminal-line dimmed">⠿ Analyzing Repository Structure</div>
+                    <div class="terminal-line success">✔ Initialized docufy.yaml</div>
+                    <div class="terminal-line"></div>
+                    <div class="terminal-line dimmed">Next steps</div>
+                    <div class="terminal-line dimmed">  • Review docufy.yaml to customize included files</div>
+                    <div class="terminal-line dimmed">  • Run docufy run to generate documentation</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section arch-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Architecture</span>
+                <h2 class="section-title">Context Engineering<br><span class="gradient-text">Under the Hood</span></h2>
+                <p class="section-subtitle">Every design decision maps to a principle from the ACE Framework. Here's how the pieces fit together.</p>
+            </div>
+            <div class="arch-grid">
+                <div class="arch-card">
+                    <div class="arch-card-icon">📁</div>
+                    <h4>docufy/pipelines/</h4>
+                    <p>CLI supervisor orchestrating the init → run → update workflow. Entry point for all commands.</p>
+                </div>
+                <div class="arch-card">
+                    <div class="arch-card-icon">⚙️</div>
+                    <h4>docufy/components/</h4>
+                    <p>Core logic for each CLI command — <code>init.py</code>, <code>run.py</code>, <code>update.py</code>, <code>models.py</code>, and <code>config.py</code>.</p>
+                </div>
+                <div class="arch-card">
+                    <div class="arch-card-icon">📝</div>
+                    <h4>docufy/prompts/</h4>
+                    <p>Version-controlled prompt files treated as source code — <code>batch_summary.txt</code> and <code>final_summary.txt</code>.</p>
+                </div>
+                <div class="arch-card">
+                    <div class="arch-card-icon">🔌</div>
+                    <h4>docufy/utils/</h4>
+                    <p>LLM client, file extraction, caching, scanning, logging — all the supporting infrastructure.</p>
+                </div>
+                <div class="arch-card">
+                    <div class="arch-card-icon">📐</div>
+                    <h4>docufy/schema/</h4>
+                    <p>Pydantic models for <code>LLMConfig</code>, <code>FileSummaries</code>, and <code>ReadmeResponse</code> — structured data contracts.</p>
+                </div>
+                <div class="arch-card">
+                    <div class="arch-card-icon">🗄️</div>
+                    <h4>.docufy/cache.json</h4>
+                    <p>The compaction artefact — stores distilled file summaries so agents resume from clean, compact context.</p>
+                </div>
+            </div>
+            <!-- ACE principles table -->
+            <div class="ace-table-wrap">
+                <h3 class="ace-table-title">ACE Framework Mapping</h3>
+                <div class="ace-table">
+                    <div class="ace-row ace-header">
+                        <span>Context Engineering Concept</span>
+                        <span>How Docufy Implements It</span>
+                    </div>
+                    <div class="ace-row">
+                        <span>Stateless LLM — input is everything</span>
+                        <span>Prompts treated as primary engineering artefacts</span>
+                    </div>
+                    <div class="ace-row">
+                        <span>Frequent Intentional Compaction</span>
+                        <span>Two-stage pipeline: raw files → summaries → synthesis</span>
+                    </div>
+                    <div class="ace-row">
+                        <span>Subagent Context Isolation</span>
+                        <span>Per-file summariser keeps raw content out of synthesis</span>
+                    </div>
+                    <div class="ace-row">
+                        <span>Research → Plan → Implement</span>
+                        <span>init (discover) → run (synthesise) → update (replan)</span>
+                    </div>
+                    <div class="ace-row">
+                        <span>Prompts as Source Code</span>
+                        <span>prompts/ are version-controlled; constraints documented</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Started Section -->
+    <section id="get-started" class="section cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-glow"></div>
+                <div class="cta-content">
+                    <h2>Ready to Document<br><span class="gradient-text">Your Codebase?</span></h2>
+                    <p>Install Docufy in seconds. Set your Groq API key. Run three commands. Get a professional README.</p>
+                    <div class="cta-install">
+                        <div class="install-block">
+                            <code id="install-cmd">pip install docufy</code>
+                            <button class="copy-btn" id="copy-btn" aria-label="Copy command">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cta-steps">
+                        <div class="cta-step">
+                            <span class="step-num">1</span>
+                            <span>Set <code>GROQ_API_KEY</code></span>
+                        </div>
+                        <div class="cta-step">
+                            <span class="step-num">2</span>
+                            <span>Run <code>docufy init</code></span>
+                        </div>
+                        <div class="cta-step">
+                            <span class="step-num">3</span>
+                            <span>Run <code>docufy run</code></span>
+                        </div>
+                    </div>
+                    <div class="cta-actions">
+                        <a href="https://pypi.org/project/docufy/" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+                            Install from PyPI
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="https://github.com/tushantrao141-arch/docufy" class="btn btn-outline btn-lg" target="_blank" rel="noopener">
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📄</span>
+                    <span class="logo-text">Docufy</span>
+                </div>
+                <p class="footer-tagline">A hands-on exploration of advanced context engineering — built as an open source AI agent for documentation.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/tushantrao141-arch/docufy" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://pypi.org/project/docufy/" target="_blank" rel="noopener">PyPI</a>
+                    <a href="https://github.com/tushantrao141-arch/docufy/issues" target="_blank" rel="noopener">Issues</a>
+                    <a href="https://github.com/tushantrao141-arch/docufy/discussions" target="_blank" rel="noopener">Discussions</a>
+                </div>
+                <p class="footer-copy">Licensed under GNU AGPLv3 · Built with context engineering ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
